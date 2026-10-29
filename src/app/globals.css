@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* Animations (vagues, apparition) */
+@theme {
+  --animate-drift-a: drift 26s linear infinite;
+  --animate-drift-b: drift 38s linear infinite reverse;
+  --animate-drift-c: drift 52s linear infinite;
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes drift {
+    to {
+      transform: translateX(-400px);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Couleurs de marque et thèmes : les variables changent, les classes Tailwind restent les mêmes */
+@theme inline {
+  --color-brand: #d92424;
+  --color-bg: var(--bg);
+  --color-surface: var(--bg-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --font-display: var(--font-bricolage), "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-instrument), "Segoe UI", system-ui, sans-serif;
+}
+
+:root {
+  --bg: #f5f3f2;
+  --bg-2: #ebe7e5;
+  --fg: #1c1a1b;
+  --muted: #5f5a5c;
+  --line: #d9d3d0;
+  --accent: #c81e1e;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1a1a1c;
+    --bg-2: #232326;
+    --fg: #f3f0ef;
+    --muted: #a9a3a5;
+    --line: #34343a;
+    --accent: #ff4a4a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1a1a1c;
+  --bg-2: #232326;
+  --fg: #f3f0ef;
+  --muted: #a9a3a5;
+  --line: #34343a;
+  --accent: #ff4a4a;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+}
+
+/* Conteneur centré, compatible encoches des téléphones */
+@utility wrap {
+  max-width: 1160px;
+  margin-inline: auto;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
